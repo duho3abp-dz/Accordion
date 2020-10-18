@@ -23,23 +23,21 @@ const accordion = ({
 
     const removeActiveClass = i => buttons[i].classList.remove(active);
 
-    buttons.forEach((button, i) => button.addEventListener('click', () => {
+    const buttonClickEvent = i => {
         const wrappHeight = window.getComputedStyle(wrappers[i]).height;
 
         if (+contents[i].style.height.replace(/px/, '') === 0) {
-
             if (active) { addActiveClass(i); }
             closeAllContents();
             openContent(wrappHeight, i);
-
         } else {
-
             if (active) { removeActiveClass(i); }
             closeContent(i);
-
         }
-        
-    }));
+    }
+
+    buttons.forEach((button, i) => button.addEventListener('click', () => buttonClickEvent(i) ));
+    
 };
 
 export default accordion;

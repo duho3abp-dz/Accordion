@@ -39,12 +39,12 @@ p {
 .acco-block__head {
     font-size: 40px;
     cursor: pointer;
-    transition: 1s;
+    transition: all 1s ease;
 }
 
 .acco-block__content {
     overflow: hidden;
-    transition: .3s;
+    transition: all .3s ease;
     height: 0;
 }
 
