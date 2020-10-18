@@ -7,23 +7,48 @@ const accordion = ({
     active
 }) => {
     const buttons = document.querySelectorAll(buttonsIdentifier),
-          contents = document.querySelectorAll(contentsIdentifier);
-        //   wrappers = document.querySelectorAll(wrappersIdentifier);
+          contents = document.querySelectorAll(contentsIdentifier),
+          wrappers = document.querySelectorAll(wrappersIdentifier);
+
+    const openContent = (height, i) => contents[i].style.height = height;
+
+    const closeContent = i => contents[i].style.height = '0px';
+
+    const closeAllContents = () => contents.forEach(content => content.style.height = '0px');
+
+    const addActiveClass = i => {
+        buttons.forEach(button => button.classList.remove(active));
+        buttons[i].classList.add(active);
+    };
+
+    const removeActiveClass = i => buttons[i].classList.remove(active);
 
     buttons.forEach((button, i) => button.addEventListener('click', () => {
-        if (!contents[i].classList.contains(active)) {
-            contents.forEach(content => content.classList.remove(active));
-            contents[i].classList.add(active);
+        const wrappHeight = window.getComputedStyle(wrappers[i]).height;
+
+        if (+contents[i].style.height.replace(/px/, '') === 0) {
+
+            if (active) { addActiveClass(i); }
+            closeAllContents();
+            openContent(wrappHeight, i);
+
         } else {
-            contents[i].classList.remove(active);
+
+            if (active) { removeActiveClass(i); }
+            closeContent(i);
+
         }
         
     }));
 };
 
-accordion({
-    buttonsIdentifier: '.acco-block__head',
-    contentsIdentifier: '.acco-block__content',
-    wrappersIdentifier: '.acco-block__wrapper',
-    active: 'acco-block__content---active'
-});
+export default accordion;
+
+// *** If you want to test, uncomment the code below and comment out the export *** //
+
+// accordion({
+//     buttonsIdentifier: '.acco-block__head',
+//     contentsIdentifier: '.acco-block__content',
+//     wrappersIdentifier: '.acco-block__wrapper',
+//     active: 'acco-block__content---active'
+// });
