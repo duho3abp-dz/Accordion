@@ -37,7 +37,6 @@ const accordion = ({
     }
 
     buttons.forEach((button, i) => button.addEventListener('click', () => buttonClickEvent(i) ));
-    
 };
 
 export default accordion;
