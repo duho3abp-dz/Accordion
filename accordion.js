@@ -4,7 +4,8 @@ const accordion = ({
     buttonsIdentifier,
     contentsIdentifier,
     wrappersIdentifier,
-    active
+    active,
+    closeAll // if true, then close all content when clicking on the head
 }) => {
     const buttons = document.querySelectorAll(buttonsIdentifier),
           contents = document.querySelectorAll(contentsIdentifier),
@@ -17,7 +18,7 @@ const accordion = ({
     const closeAllContents = () => contents.forEach(content => content.style.height = '0px');
 
     const addActiveClass = i => {
-        buttons.forEach(button => button.classList.remove(active));
+        if (closeAll) { buttons.forEach(button => button.classList.remove(active)); }
         buttons[i].classList.add(active);
     };
 
@@ -28,7 +29,7 @@ const accordion = ({
 
         if (+contents[i].style.height.replace(/px/, '') === 0) {
             if (active) { addActiveClass(i); }
-            closeAllContents();
+            if (closeAll) { closeAllContents(); }
             openContent(wrappHeight, i);
         } else {
             if (active) { removeActiveClass(i); }
@@ -47,5 +48,6 @@ export default accordion;
 //     buttonsIdentifier: '.acco-block__head',
 //     contentsIdentifier: '.acco-block__content',
 //     wrappersIdentifier: '.acco-block__wrapper',
-//     active: 'acco-block__content---active'
+//     active: 'acco-block__content---active',
+//     closeAll: true
 // });
